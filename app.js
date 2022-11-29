@@ -31,21 +31,30 @@ function copyToClick(text) {
     navigator.clipboard.writeText(text)
 }
 
-function setRandomColor() {
-    cols.forEach((col) => {
+function setRandomColor(isInitial) {
+    const colors = isInitial ? getColorsFromHash() : []
+    cols.forEach((col, index) => {
         const isLocked = col.querySelector('i').classList.contains('fa-lock')
 
-        const color = chroma.random()
         const title = col.querySelector('h2')
         const button = col.querySelector('button')
         if (isLocked) {
+            colors.push(title.textContent)
             return
+        }
+        const color = isInitial
+            ? colors[index] ? colors[index]
+                : chroma.random()
+            : chroma.random()
+        if (!isInitial) {
+            colors.push(color)
         }
         col.style.background = color
         title.textContent = color
         setTextColor(title, color)
         setTextColor(button, color)
     })
+    updateColorHash(colors);
 }
 
 function setTextColor(text, color) {
@@ -53,4 +62,16 @@ function setTextColor(text, color) {
     text.style.color = luminance > 0.5 ? 'black' : 'white'
 }
 
-setRandomColor()
+function updateColorHash(colors = []) {
+    document.location.hash = colors.map(col => {
+        return col.toString().substring(1)
+    }).join('-')
+}
+
+function getColorsFromHash() {
+    if (document.location.hash.length > 1) {
+        return document.location.hash.substring(1).split('-').map(color => '#' + color)
+    } return []
+}
+
+setRandomColor(true)
