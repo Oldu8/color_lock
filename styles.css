@@ -10,6 +10,13 @@ body {
   flex-direction: row;
   font-family: "Open Sans", sans-serif;
 }
+h1 {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.15);
+  font-size: 1.8rem;
+  text-align: center;
+  width: 100%;
+}
 
 .col {
   flex: 1;
@@ -45,4 +52,43 @@ h2 {
 .col button:hover {
   background-color: rgba(0, 0, 0, 0.2);
   cursor: pointer;
+}
+
+.b-marquee {
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 100%;
+  color: #fff;
+  padding: 10px;
+  font-size: 1.25rem;
+  position: fixed;
+  margin-bottom: 10px;
+}
+
+.b-marquee__text {
+  -webkit-animation: animMarquee 25s linear infinite;
+  animation: animMarquee 25s linear infinite;
+}
+
+@-webkit-keyframes animMarquee {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(0);
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
+}
+
+@keyframes animMarquee {
+  0% {
+    -webkit-transform: translateX(0);
+    transform: translateX(-100%);
+  }
+  100% {
+    -webkit-transform: translateX(100%);
+    transform: translateX(100%);
+  }
 }
